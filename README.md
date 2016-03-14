@@ -14,11 +14,15 @@ You may check the project and read its code since it is for learning I hope you 
 
 # Techique used
 
-1) Django
-2) Twitter Bootstrap
-3) jQuery
-4) Ajax
-5) Django File Cache
-6) Django Haystack
-7) Whoosh
-8) Django Taggit
+* Django
+* Twitter Bootstrap
+* jQuery
+* Ajax
+* Django File Cache
+* Django Haystack
+* Whoosh
+* Django Taggit
+
+# Admin user login account
+username: admin
+password: admin123
