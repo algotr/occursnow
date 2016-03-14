@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<div class="row">
+<div class="panel">
+    <div class="panel-body">
+        <h2>{{ title }}</h2>
+    </div>
+</div>
+{% for u in users.object_list %}
+<div class="col-lg-4">
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="col-md-4 col-sm-2 col-xs-12">
+            <img src="{{ u.userprofile.gravatar_url }}" alt="" class="img-circle img-responsive">
+        </div>
+        <div class="col-md-8 col-sm-10 col-xs-12">
+            <p class="page-header">
+           <a href="{% url 'user_page' u.username %}">{{ u.get_full_name }}</a>
+            </p>
+           <p>
+                <i class="glyphicon glyphicon-heart">&nbsp;</i><small>{% trans "عدد المتابعين" %}: </small>
+                <small class="text-success">{{ u.userprofile.followed_by.all.count }}</small>
+            </p>
+            <p>
+                <i class="glyphicon glyphicon-list-alt">&nbsp;</i><small>{% trans "عدد الاخبار" %}: </small>
+                <small class="text-success">{{ u.post_set.all.count }}</small>
+            </p>
+        </div>
+        <div class="pull-left">
+            <form action="{% url 'follow' u.username %}" method="post">{% csrf_token %}
+                <button type="submit" class="btn btn-success btn-sm">{% trans "متابعة" %}</button>
+                <input type="hidden" name="next" value="{{ next }}" />
+            </form>
+        </div>
+      
+    </div>            
+</div>
+</div>
+{% endfor %}
+</div>
+<div class="row">
+            <nav>
+        <ul class="pager">
+            {% if users.has_next %}
+                <li class="next"><a href="?page={{ users.next_page_number }}">{% trans "التالي" %} <span
+                        aria-hidden="true">&larr;</span></a></li>
+            {% endif %}
+            {% if users.has_previous %}
+                <li class="previous"><a href="?page={{ users.previous_page_number }}"><span
+                        aria-hidden="true">&rarr;</span> {% trans "السابق" %}</a></li>
+            {% endif %}
+
+        </ul>
+    </nav>
+</div>
+{% endblock %}

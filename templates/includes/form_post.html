@@ -1,0 +1,26 @@
+{% load i18n %}
+<form action="{% url 'home:add_post' %}" method="post" role="form">{% csrf_token %}
+    <div class="form-group">
+        {{ post_form.content }}
+        {% if post_form.content.errors %}
+        <ul class="text-danger">
+        {% for error in post_form.content.errors %}
+            <li>{{ error }}</li>
+        </ul>
+        {% endfor %}
+        {% endif %}
+    </div>
+    <div class="form-group">
+        <label for="" class="col-sm-2 control-label small">{{ post_form.tags.label }} :</label>
+        {{ post_form.tags }}
+        {% if post_form.tags.errors %}
+        <ul class="text-danger">
+        {% for error in post_form.tags.errors %}
+            <li>{{ error }}</li>
+        </ul>
+        {% endfor %}
+        {% endif %}
+        <input type="submit" class="btn btn-primary pull-left" value="{% trans "اضافة" %}">
+        <input type="hidden" name="next" value="{{ next }}"/>
+    </div>
+</form>

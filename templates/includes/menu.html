@@ -1,0 +1,41 @@
+{% load i18n %}
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url "home" %}">{% trans "يحدث اﻻَن" %} (تجريبي)</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            {% if user.is_authenticated %}
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="{% url "home" %}">{% trans "الرئيسية" %}</a></li>
+                <li><a href="{% url 'public' %}">{% trans "الصفحة العامة" %}</a></li>
+                <li><a href="{% url 'user_page' user.username %}">{% trans "الصفحة الشخصية" %}</a></li>
+                <li><a href="{% url 'user_list' %}">{% trans 'صفحة الكتاب' %}</a></li>
+            </ul>
+            {% endif %}
+            <ul class="nav navbar-nav navbar-left">
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'accounts:logout' %}">{% trans 'تسجيل الخروج' %} ({{ user.first_name }})</a></li>
+                {% else %}
+                    <li><a href="#" data-toggle="modal" data-target="#loginModal">{% trans "الدخول" %}</a></li>
+                    <li><a href="#" data-toggle="modal" data-target="#registerModal">{% trans "التسجيل" %}</a></li>
+                {% endif %}
+            </ul>
+            <form method="get" action="/search/" class="navbar-form navbar-left">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="q" placeholder="{% trans "بحث" %} ...">
+                    <input type="hidden" value="{{ next }}" name="next" />
+                </div>
+            </form>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>

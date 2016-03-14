@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<div class="row profile panel-info panel">
+    {% include "includes/user_menu.html" %}
+
+		<div class="col-lg-9 col-md-9 col-sm-8">
+            <div class="profile-content" style="min-height: 150px !important">
+                <div class="col-lg-5 page-header">
+                    <h5>
+                        <i class="glyphicon glyphicon-list-alt">&nbsp;</i>{% trans "عدد اﻻخبار" %} ({{ req_user.post_set.count }}) {% trans "خبر" %}
+                    </h5>
+                </div>
+                <div class="col-lg-5 col-lg-offset-1 page-header">
+                    <h5>
+                        <i class="glyphicon glyphicon-user">&nbsp;</i>{% trans "اخر تسجيل دخول" %} ({{ req_user.last_login|timesince }})
+                    </h5>
+                </div>
+                <div class="col-lg-5 page-header">
+                    <h5>
+                        <i class="glyphicon glyphicon-heart">&nbsp;</i>{% trans "عدد المتابعين" %} ({{ req_user.userprofile.followed_by.count }}) {% trans "متابع" %}
+                    </h5>
+                </div>
+                <div class="col-lg-5 col-lg-offset-1 page-header">
+                    <h5>
+                        <i class="glyphicon glyphicon-heart">&nbsp;</i>{% trans "عدد اﻻصدقاء" %} ({{ req_user.userprofile.follows.count }})
+                    </h5>
+                </div>
+            </div>
+		</div>
+</div>
+<div class="row profile">
+    {% include "includes/posts.html" %}
+</div>
+{% endblock %}

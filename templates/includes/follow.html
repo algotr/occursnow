@@ -1,0 +1,65 @@
+{% load static %}
+{% load i18n %}
+
+<div class="col-lg-9 col-md-9 col-sm-8">
+    <div class="profile-content img-rounded">
+        <h3>{% trans 'صفحة' %} ال{{ title }}</h3>
+    {% if user_profiles %}
+    <div class="row">
+        {% for profile in user_profiles.object_list %}
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="col-lg-4 col-md-3 col-sm-5 col-xs-5">
+                        <img src="{{ profile.gravatar_url }}" alt="" class="img-circle img-responsive">
+                    </div>
+                    <div class="col-lg-8 col-md-9 col-sm-7 col-xs-7">
+                       <p class="page-header">
+                       <a href="{% url 'user_page' profile.user.username %}">{{ profile.user.get_full_name }}</a>
+                       </p>
+                       <p>
+                            <small><i class="glyphicon glyphicon-heart">&nbsp;</i>{% trans "عدد المتابعين" %}: </small>
+                            <small class="text-success">{{ profile.followed_by.all.count }}</small>
+                        </p>
+                        <p>
+                            <small><i class="glyphicon glyphicon-list-alt">&nbsp;</i>{% trans "عدد الاخبار" %}: </small>
+                            <small class="text-success">{{ profile.user.post_set.all.count }}</small>
+                        </p>
+                    </div>
+                    <div class="pull-left">
+                       {% if profile in user.userprofile.follows.all %}
+                            <form action="{% url 'unfollow' profile.user.username %}" method="post">{% csrf_token %}
+                                <button type="submit" class="btn btn-danger btn-sm">{% trans "الغاء المتابعة" %}</button>
+                                <input type="hidden" name="next" value="{{ next }}" />
+                            </form>
+                        {% else %}
+                            <form action="{% url 'follow' profile.user.username %}" method="post">{% csrf_token %}
+                                <button type="submit" class="btn btn-success btn-sm">{% trans "متابعة" %}</button>
+                                <input type="hidden" name="next" value="{{ next }}" />
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>            
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="row">
+        <nav>
+            <ul class="pager">
+                {% if user_profiles.has_next %}
+                    <li class="next"><a href="?page={{ user_profiles.next_page_number }}">{% trans "التالي" %} <span
+                            aria-hidden="true">&larr;</span></a></li>
+                {% endif %}
+                {% if user_profiles.has_previous %}
+                    <li class="previous"><a href="?page={{ user_profiles.previous_page_number }}"><span
+                            aria-hidden="true">&rarr;</span> {% trans "السابق" %}</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+     </div>
+{% else %}
+    <h3>{% trans 'لا يوجد لديك ' %} {{ title }}</h3>
+{% endif %}
+</div>
+</div>

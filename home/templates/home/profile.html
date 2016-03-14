@@ -1,0 +1,64 @@
+{% extends "base.html" %} {% load static %} {% load i18n %} {% block content %}
+<div class="row profile">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<div class="col-lg-10 col-lg-offset-2">
+				<ul class="nav nav-pills">
+					<li class="active">
+						<a href="{% url 'user_page' user.username %}">
+						<i class="glyphicon glyphicon-home"></i>
+						{% trans "الرئيسية" %}
+						</a>
+					</li>
+					<li>
+						<a href="{% url 'accounts:profile' %}">
+						<i class="glyphicon glyphicon-user"></i>
+						{% trans "اعدادات الحساب" %}
+	                    </a>
+					</li>
+					<li>
+						<a href="{% url 'followers' %}">
+						<i class="glyphicon glyphicon-ok"></i>
+						{% trans "المتابعين" %}
+	                    </a>
+					</li>
+					<li>
+						<a href="{% url 'followings' %}">
+						<i class="glyphicon glyphicon-user"></i>
+						{% trans "الأصدقاء" %}
+	                    </a>
+					</li>
+				</ul>
+			</div>
+			
+			<div>&nbsp;</div>
+			<div class="col-lg-2">
+				<div class="profile-userpic">{% if req_user.userprofile.gravatar_url %}
+					<img src="{{ req_user.userprofile.gravatar_url }}" class="center-block" alt="">{% else %}
+					<img src="{% static " img/lion.jpg " %}" class="img-responsive" alt="">{% endif %}</div>
+				<div class="profile-usertitle">
+					<div class="profile-usertitle-name">{{ req_user.get_full_name }}</div>
+					<div class="profile-usertitle-job"></div>
+				</div>
+				<!-- END SIDEBAR USER TITLE -->
+				<!-- SIDEBAR BUTTONS -->{% if user.id != req_user.id %}
+				<div class="profile-userbuttons">{% if req_user.userprofile in user.userprofile.follows.all %}
+					<form action="{% url 'unfollow' req_user.username %}" method="post">{% csrf_token %}
+						<button type="submit" class="btn btn-danger btn-sm">{% trans "الغاء المتابعة" %}</button>
+						<input type="hidden" value="{{ next }}" name="next" />
+					</form>{% else %}
+					<form action="{% url 'follow' req_user.username %}" method="post">{% csrf_token %}
+						<button type="submit" class="btn btn-success btn-sm">{% trans "متابعة" %}</button>
+						<input type="hidden" value="{{ next }}" name="next" />
+					</form>{% endif %}</div>{% endif %}
+			</div><!-- /col-lg-3 -->
+			<div class="col-lg-10">{% include "includes/form_post.html" %}</div>
+		</div>
+	</div><!-- /panel panel-default -->
+</div>
+
+<div class="row profile">
+	{% include "includes/posts.html" %}
+</div>
+
+{% endblock %}

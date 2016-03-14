@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+    <div class="row profile">
+        {% include "includes/user_menu.html" %}
+        <div class="col-lg-9 col-md-9 col-sm-8">
+            <div class="profile-content">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">{% trans 'اعدادات الحساب' %} ({{ user.username }})</div>
+                    <div class="panel-body">
+                        <form action="{% url "accounts:profile" %}" method="post">{% csrf_token %}
+                            <div class="form-group">
+                                <label for="first_name">{{ form.first_name.label }}</label>
+                                <label for="first_name" class="sr-only">{{ form.first_name.label }}</label>
+                                {{ form.first_name }}
+                                {% if form.first_name.errors %}
+                                    <ul class="text-danger">
+                                        {% for error in form.first_name.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                <label for="last_name">{{ form.last_name.label }}</label>
+                                <label for="last_name" class="sr-only">{{ form.last_name.label }}</label>
+                                {{ form.last_name }}
+                                {% if form.last_name.errors %}
+                                    <ul class="text-danger">
+                                        {% for error in form.last_name.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                <label for="email">{{ form.email.label }}</label>
+                                <label for="email" class="sr-only">{{ form.email.label }}</label>
+                                {{ form.email }}
+                                {% if form.email.errors %}
+                                    <ul class="text-danger">
+                                        {% for error in form.email.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                <label for="password1" class="sr-only">{{ form.password1.label }}</label>
+                                <label for="passowrd1">{{ form.password1.label }}</label>
+                                {{ form.password1 }}
+                                {% if form.password1.errors %}
+                                    <ul class="text-danger">
+                                        {% for error in form.password1.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                <label for="password2" class="sr-only">{{ form.password2.label }}</label>
+                                <label for="password2">{{ form.password2.label }}</label>
+                                {{ form.password2 }}
+                                {% if form.password2.errors %}
+                                    <ul class="text-danger">
+                                        {% for error in form.password2.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </div>
+                            <button class="btn btn-primary" type="submit">{% trans "حفظ" %}</button>
+                        </form>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

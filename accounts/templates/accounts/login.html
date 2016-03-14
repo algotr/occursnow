@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block jumbotron %}
+{% endblock %}
+
+{% block content %}
+    <div class="col-lg-8 col-lg-offset-2">
+        <div class="panel panel-primary">
+
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-6 col-lg-offset-3">
+                        {% if error %}
+                            <p class="text-danger">{{ error }}</p>
+                        {% endif %}
+                    <fieldset>
+                        <legend>{{ title }}</legend>
+                    </fieldset>
+                        <form action="{% url "accounts:login" %}" method="post">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <input type="submit" class="btn btn-primary" value="{% trans "تسجيل الدخول" %}"/>
+                            <input type="hidden" name="next" value="{{ next }}"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
