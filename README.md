@@ -1,7 +1,7 @@
 # Occursnow
 
 An application that you can register and publish breaking news about different
-things such as culture, music, marketing, fashion, sports, accedent or life style.
+things such as culture, music, marketing, fashion, sports, accident or life style.
 
 Other registered users can follow each other and can rate on posts up or down for
 only once per post. When you follow other users/authors their posts will appear
